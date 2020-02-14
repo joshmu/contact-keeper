@@ -3,19 +3,19 @@ const config = require('config')
 
 const mongoURI = config.get('mongoURI')
 
-const connectDB = () => {
-  mongoose
-    .connect(mongoURI, {
+const connectDB = async () => {
+  try {
+    await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useCreateIndex: true,
       useUnifiedTopology: true,
       useFindAndModify: false
     })
-    .then(() => console.log('MongoDB Connected.'))
-    .catch(err => {
-      console.error(err.message)
-      process.exit(1)
-    })
+    console.log('MongoDB Connected.')
+  } catch (err) {
+    console.error(err.message)
+    process.exit(1)
+  }
 }
 
 module.exports = connectDB
