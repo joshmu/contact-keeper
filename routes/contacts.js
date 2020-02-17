@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
+const { check, validationResult } = require('express-validator')
+
 const auth = require('../middleware/auth.js')
 const Contact = require('../models/Contact.js')
 
@@ -17,15 +19,42 @@ router.get('/', auth, async (req, res) => {
     console.error(err.message)
     res.status(500).send('Server Error')
   }
-  res.send('Get all contacts')
 })
 
 // @route   POST /api/contacts
 // @desc    Add new contact
 // @access  Private
-router.post('/', (req, res) => {
-  res.send('Add new contact')
-})
+router.post(
+  '/',
+  [
+    auth,
+    check('name', 'A name is required.').isString(),
+    check('email', 'Email required.').isEmail()
+  ],
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() })
+    }
+
+    const { name, email, phone, type } = req.body
+
+    try {
+      const newContact = new Contact({
+        name,
+        email,
+        phone,
+        type,
+        user: req.user.id
+      })
+      await newContact.save()
+      res.json(newContact)
+    } catch (err) {
+      console.error(err.message)
+      res.status(500).send('Server Error')
+    }
+  }
+)
 
 // @route   PUT /api/contacts/:id
 // @desc    Update contact
