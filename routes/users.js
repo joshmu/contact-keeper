@@ -28,21 +28,21 @@ router.post(
     const { name, email, password } = req.body
 
     try {
-      const user = await User.findOne({ email })
-      if (user) {
+      const userFound = await User.findOne({ email })
+      if (userFound) {
         return res.status(500).json({ msg: 'User already exists' })
       }
 
-      const createdUser = new User({
+      const user = new User({
         name,
         email,
         password
       })
 
       const salt = await bcrypt.genSalt(10)
-      createdUser.password = await bcrypt.hash(password, salt)
+      user.password = await bcrypt.hash(password, salt)
 
-      await createdUser.save()
+      await user.save()
 
       res.json({ msg: 'User saved to database.' })
     } catch (error) {
