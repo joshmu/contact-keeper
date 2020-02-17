@@ -59,15 +59,48 @@ router.post(
 // @route   PUT /api/contacts/:id
 // @desc    Update contact
 // @access  Private
-router.put('/:id', (req, res) => {
-  res.send('Update contact')
+router.put('/:id', auth, async (req, res) => {
+  const { name, email, phone, type } = req.body
+
+  // consruct updateContact details
+  const updateContact = {}
+  if (name) updateContact.name = name
+  if (email) updateContact.email = email
+  if (phone) updateContact.phone = phone
+  if (type) updateContact.type = type
+
+  try {
+    // find original contact
+    let contact = await Contact.findById(req.params.id)
+
+    // make sure user owns this contact
+    if (contact.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'Not authorized' })
+    }
+
+    contact = await Contact.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
+      { lean: true, new: true, upsert: true }
+    )
+    res.json(contact)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
 })
 
 // @route   DELETE /api/contacts/:id
 // @desc    Remove contact
 // @access  Private
-router.delete('/:id', (req, res) => {
-  res.send('Remove contact')
+router.delete('/:id', async (req, res) => {
+  try {
+    const contactToDelete = await Contact.findById(req.params.id).lean()
+    res.json(contactToDelete)
+  } catch (e) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
 })
 
 module.exports = router
