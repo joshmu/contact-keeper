@@ -322,6 +322,10 @@ button {
   font: inherit;
 }
 
+:disabled {
+  opacity: 0.6;
+}
+
 .form-group {
   margin: 1.2rem 0;
 }
