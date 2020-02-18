@@ -73,6 +73,9 @@ const ContactForm = () => {
           type="submit"
           value="Add Contact"
           className="btn btn-primary btn-block"
+          disabled={
+            name.length === 0 || (email.length === 0 && phone.length === 0)
+          }
         />
       </div>
     </form>
