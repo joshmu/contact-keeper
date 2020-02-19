@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import AlertContext from '../../context/alert/alertContext'
 
 const Login = () => {
+  const alertContext = useContext(AlertContext)
   const [user, setUser] = useState({
     email: '',
     password: ''
