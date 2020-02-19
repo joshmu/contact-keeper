@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
-import ContactContext from '../../context/Contact/conactContext'
+import ContactContext from '../../context/Contact/contactContext'
 
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext)
