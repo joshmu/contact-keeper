@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import uuid from 'uuid'
-import contactContext from './contactContext'
+import ContactContext from './contactContext'
 import contactReducer from './contactReducer'
 import {
   ADD_CONTACT,
@@ -80,7 +80,7 @@ const ContactState = props => {
   }
 
   return (
-    <contactContext.Provider
+    <ContactContext.Provider
       value={{
         contacts: state.contacts,
         current: state.current,
@@ -95,7 +95,7 @@ const ContactState = props => {
       }}
     >
       {props.children}
-    </contactContext.Provider>
+    </ContactContext.Provider>
   )
 }
 

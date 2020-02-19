@@ -15,14 +15,38 @@ import {
 } from '../Types'
 
 const AuthState = () => {
-  // init
-  const initialState = {}
+  const initialState = {
+    token: localStorage.getItem('token'),
+    isAuthenticated: null,
+    loading: true,
+    user: null,
+    error: null
+  }
   const [state, dispatch] = useReducer(authReducer, initialState)
 
-  // actions
+  // Load User
 
-  // context
-  return <authContext.Provider>{props.children}</authContext.Provider>
+  // Register User
+
+  // Login User
+
+  // Logout
+
+  // Clear Errors
+
+  return (
+    <authContext.Provider
+      value={{
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+        loading: state.loading,
+        error: state.error
+      }}
+    >
+      {props.children}
+    </authContext.Provider>
+  )
 }
 
 export default AuthState
