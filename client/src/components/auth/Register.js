@@ -4,18 +4,21 @@ import AuthContext from '../../context/auth/authContext'
 
 const Register = () => {
   const { setAlert } = useContext(AlertContext)
-  const { register, error } = useContext(AuthContext)
+  const { register, error, clearErrors } = useContext(AuthContext)
+
   const [user, setUser] = useState({
     name: '',
     email: '',
     password: '',
     password2: ''
   })
-
   const { name, email, password, password2 } = user
 
   useEffect(() => {
-    setAlert(error, 'danger')
+    if (error === 'User already exists') {
+      setAlert(error, 'danger')
+      clearErrors()
+    }
   }, [error])
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value })

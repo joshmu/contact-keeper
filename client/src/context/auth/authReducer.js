@@ -28,6 +28,11 @@ export default (state, action) => {
         isAuthenticated: false,
         error: action.payload.msg
       }
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null
+      }
     default:
       return state
   }
