@@ -2,9 +2,9 @@ import React, { useState, useContext, useEffect } from 'react'
 import AlertContext from '../../context/alert/alertContext'
 import AuthContext from '../../context/auth/authContext'
 
-const Login = () => {
+const Login = props => {
   const { setAlert } = useContext(AlertContext)
-  const { login, error, clearErrors } = useContext(AuthContext)
+  const { login, error, clearErrors, isAuthenticated } = useContext(AuthContext)
   const [user, setUser] = useState({
     email: '',
     password: ''
@@ -13,12 +13,15 @@ const Login = () => {
   const { email, password } = user
 
   useEffect(() => {
+    if (isAuthenticated) {
+      props.history.push('/')
+    }
     if (error === 'Invalid credentials') {
       setAlert(error, 'danger')
       clearErrors()
     }
     // eslint-disable-next-line
-  }, [error])
+  }, [error, isAuthenticated])
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value })
   const onSubmit = e => {
