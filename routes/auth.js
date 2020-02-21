@@ -21,7 +21,7 @@ router.get('/', auth, async (req, res) => {
     res.json(user)
   } catch (e) {
     console.error(e.message)
-    res.status(500).send('Server Error')
+    res.status(500).json({ msg: 'Authorization Error' })
   }
 })
 

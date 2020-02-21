@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import ContactForm from '../contacts/ContactForm'
 import Contacts from '../contacts/Contacts'
 import ContactFilter from '../contacts/ContactFilter'
+import AuthContext from '../../context/auth/authContext'
 
 const Home = () => {
+  const { token, isAuthenticated, loadUser } = useContext(AuthContext)
+  useEffect(() => {
+    if (token) {
+      loadUser()
+    }
+
+    if (isAuthenticated) {
+      console.log('loading user for home')
+      loadUser()
+    }
+    // eslint-disable-next-line
+  }, [isAuthenticated, token])
+
   return (
     <div className="grid-2">
       <div>
