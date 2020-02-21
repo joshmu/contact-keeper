@@ -42,11 +42,9 @@ const AuthState = props => {
       console.log(res.data)
 
       dispatch({ type: USER_LOADED, payload: res.data })
-
-      props.history.push('/')
     } catch (err) {
       console.error(err)
-      // dispatch({ type: AUTH_ERROR, payload: err.response.data })
+      dispatch({ type: AUTH_ERROR, payload: err.response.data })
     }
   }
 
@@ -62,6 +60,7 @@ const AuthState = props => {
       dispatch({ type: REGISTER_SUCCESS, payload: res.data })
       loadUser()
     } catch (err) {
+      console.error(err)
       dispatch({ type: REGISTER_FAIL, payload: err.response.data })
     }
   }

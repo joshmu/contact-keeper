@@ -7,16 +7,12 @@ import AuthContext from '../../context/auth/authContext'
 const Home = () => {
   const { token, isAuthenticated, loadUser } = useContext(AuthContext)
   useEffect(() => {
-    if (token) {
-      loadUser()
-    }
-
     if (isAuthenticated) {
       console.log('loading user for home')
       loadUser()
     }
     // eslint-disable-next-line
-  }, [isAuthenticated, token])
+  }, [isAuthenticated])
 
   return (
     <div className="grid-2">
