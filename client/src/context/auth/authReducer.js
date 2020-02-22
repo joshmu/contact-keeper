@@ -38,6 +38,14 @@ export default (state, action) => {
         isAuthenticated: false,
         error: action.payload.msg
       }
+    case LOGOUT:
+      localStorage.removeItem('token')
+      return {
+        ...state,
+        token: null,
+        user: null,
+        isAuthenticated: false
+      }
     case CLEAR_ERRORS:
       return {
         ...state,

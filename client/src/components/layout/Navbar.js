@@ -7,11 +7,15 @@ import AuthContext from '../../context/auth/authContext'
 const Navbar = ({ title, icon }) => {
   const { isAuthenticated, logout, user } = useContext(AuthContext)
 
+  const onLogout = props => {
+    logout()
+  }
+
   const authLinks = (
     <Fragment>
       <li>Hello {user && user.name}</li>
       <li>
-        <a href="#!">
+        <a href="#!" onClick={onLogout}>
           <i className="fas fa-sign-out-alt"></i>{' '}
           <span className="hide-sm">Logout</span>
         </a>
@@ -35,7 +39,7 @@ const Navbar = ({ title, icon }) => {
       <h1>
         <i className={icon} /> {title}
       </h1>
-      <ul>{isAuthenticated && user ? authLinks : guestLinks}</ul>
+      <ul>{isAuthenticated ? authLinks : guestLinks}</ul>
     </div>
   )
 }
