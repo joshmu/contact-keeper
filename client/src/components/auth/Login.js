@@ -16,7 +16,7 @@ const Login = props => {
     if (isAuthenticated) {
       props.history.push('/')
     }
-    if (error === 'Invalid credentials') {
+    if (error) {
       setAlert(error, 'danger')
       clearErrors()
     }
@@ -26,8 +26,12 @@ const Login = props => {
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value })
   const onSubmit = e => {
     e.preventDefault()
-    login({ email, password })
-    console.log('LOGIN SUBMIT')
+    if (email === '' || password === '') {
+      setAlert('Please fill in all fields', 'danger')
+    } else {
+      login({ email, password })
+      console.log('LOGIN SUBMIT')
+    }
   }
 
   return (
