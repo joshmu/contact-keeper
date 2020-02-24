@@ -61,11 +61,11 @@ router.post(
 )
 
 /**
- * @route   PUT /api/contacts/:id
+ * @route   PUT /api/contacts/:_id
  * @desc    Update contact
  * @access  Private
  */
-router.put('/:id', auth, async (req, res) => {
+router.put('/:_id', auth, async (req, res) => {
   const { name, email, phone, type } = req.body
 
   // construct updateContact details
@@ -97,7 +97,7 @@ router.put('/:id', auth, async (req, res) => {
 })
 
 /**
- * @route   DELETE /api/contacts/:id
+ * @route   DELETE /api/contacts/:_id
  * @desc    Remove contact
  * @access  Private
  */
