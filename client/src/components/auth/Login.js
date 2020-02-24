@@ -4,7 +4,14 @@ import AuthContext from '../../context/auth/authContext'
 
 const Login = props => {
   const { setAlert } = useContext(AlertContext)
-  const { login, error, clearErrors, isAuthenticated } = useContext(AuthContext)
+  const {
+    login,
+    error,
+    clearErrors,
+    isAuthenticated,
+    token,
+    loadUser
+  } = useContext(AuthContext)
   const [user, setUser] = useState({
     email: '',
     password: ''
@@ -16,12 +23,15 @@ const Login = props => {
     if (isAuthenticated) {
       props.history.push('/')
     }
+    if (!isAuthenticated && token) {
+      loadUser()
+    }
     if (error) {
       setAlert(error, 'danger')
       clearErrors()
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated])
+  }, [error, isAuthenticated, token, props.history])
 
   const onChange = e => setUser({ ...user, [e.target.name]: e.target.value })
   const onSubmit = e => {

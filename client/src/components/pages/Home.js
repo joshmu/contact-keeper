@@ -7,7 +7,7 @@ import AuthContext from '../../context/auth/authContext'
 const Home = () => {
   const { token, isAuthenticated, loadUser } = useContext(AuthContext)
   useEffect(() => {
-    if (isAuthenticated || token) {
+    if (!isAuthenticated && token) {
       loadUser()
     }
     // eslint-disable-next-line

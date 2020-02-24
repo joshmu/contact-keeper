@@ -10,7 +10,7 @@ const Contacts = () => {
   const { contacts, filtered } = contactContext
 
   if (contacts.length === 0) {
-    return <h4>Please add a contact</h4>
+    return <h5>Please add a contact.</h5>
   }
 
   return (
