@@ -35,6 +35,9 @@ const ContactState = props => {
     }
   }
 
+  // Clear Contacts
+  const clearContacts = () => dispatch({ type: CLEAR_CONTACTS })
+
   // Add Contact
   const addContact = async contact => {
     const config = {
@@ -94,7 +97,8 @@ const ContactState = props => {
         addContact,
         deleteContact,
         updateContact,
-        getContacts
+        getContacts,
+        clearContacts
       }}
     >
       {props.children}
