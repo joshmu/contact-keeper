@@ -40,7 +40,12 @@ const AuthState = props => {
         url: '/api/auth'
       })
 
-      console.log(res.data)
+      if (res.data === null) {
+        return dispatch({
+          type: AUTH_ERROR,
+          payload: 'empty user object received'
+        })
+      }
 
       dispatch({ type: USER_LOADED, payload: res.data })
     } catch (err) {
@@ -76,6 +81,7 @@ const AuthState = props => {
         data: formData
       })
       dispatch({ type: LOGIN_SUCCESS, payload: res.data })
+      loadUser()
     } catch (err) {
       dispatch({ type: LOGIN_FAIL, payload: err.response.data })
     }

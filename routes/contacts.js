@@ -13,7 +13,7 @@ const Contact = require('../models/Contact.js')
  */
 router.get('/', auth, async (req, res) => {
   try {
-    const contacts = await Contact.find({ user: req.user.id }).sort({
+    const contacts = await Contact.find({ user: req.user._id }).sort({
       date: -1
     })
     res.json(contacts)
@@ -49,7 +49,7 @@ router.post(
         email,
         phone,
         type,
-        user: req.user.id
+        user: req.user._id
       })
       await newContact.save()
       res.json(newContact)
@@ -77,15 +77,15 @@ router.put('/:id', auth, async (req, res) => {
 
   try {
     // find original contact
-    let contact = await Contact.findById(req.params.id)
+    let contact = await Contact.findById(req.params._id)
 
     // make sure user owns the contact
-    if (contact.user.toString() !== req.user.id) {
+    if (contact.user.toString() !== req.user._id) {
       return res.status(401).json({ msg: 'Not authorized' })
     }
 
     contact = await Contact.findByIdAndUpdate(
-      req.params.id,
+      req.params._id,
       { ...req.body },
       { lean: true, new: true, upsert: true }
     )
@@ -104,14 +104,14 @@ router.put('/:id', auth, async (req, res) => {
 router.delete('/:id', auth, async (req, res) => {
   try {
     // find original contact
-    let contact = await Contact.findById(req.params.id)
+    let contact = await Contact.findById(req.params._id)
 
     //  make sure user owns contact
-    if (contact.user.toString() !== req.user.id) {
+    if (contact.user.toString() !== req.user._id) {
       return res.status(401).json({ msg: 'Not authorized' })
     }
 
-    await Contact.findByIdAndRemove(req.params.id)
+    await Contact.findByIdAndRemove(req.params._id)
 
     res.json({ msg: 'Contact removed' })
   } catch (err) {

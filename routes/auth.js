@@ -17,8 +17,10 @@ const config = require('config')
  */
 router.get('/', auth, async (req, res) => {
   console.log('getting user information...')
+  console.log('req header', req.user)
   try {
-    const user = await User.findById(req.user.id).select('-password')
+    const user = await User.findById(req.user._id).select('-password')
+    console.log('this is the user from the database', user)
     res.json(user)
   } catch (e) {
     console.error(e.message)
@@ -63,7 +65,7 @@ router.post(
 
       // create token & send back
       const payload = {
-        user: { id: user.id }
+        user: { _id: user._id }
       }
       jwt.sign(
         payload,
