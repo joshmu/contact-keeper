@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import Navbar from './components/layout/Navbar'
@@ -21,7 +21,7 @@ if (localStorage.token) {
 
 const App = () => {
   return (
-    <Fragment>
+    <>
       <AuthState>
         <ContactState>
           <AlertState>
@@ -40,7 +40,7 @@ const App = () => {
           </AlertState>
         </ContactState>
       </AuthState>
-    </Fragment>
+    </>
   )
 }
 
