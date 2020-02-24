@@ -68,7 +68,7 @@ router.post(
 router.put('/:id', auth, async (req, res) => {
   const { name, email, phone, type } = req.body
 
-  // consruct updateContact details
+  // construct updateContact details
   const updateContact = {}
   if (name) updateContact.name = name
   if (email) updateContact.email = email
@@ -101,7 +101,7 @@ router.put('/:id', auth, async (req, res) => {
  * @desc    Remove contact
  * @access  Private
  */
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:_id', auth, async (req, res) => {
   try {
     // find original contact
     let contact = await Contact.findById(req.params._id)
